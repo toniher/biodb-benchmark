@@ -9,7 +9,11 @@ NUMSEQ=`cat $1|grep '>'|wc -l`
 
 NUMFILES=$(echo "a=$NUMSEQ; b=$EXTENT; if ( a%b ) a/b+1 else a/b" | bc)
 
-echo $NUMFILES
+if [ "$NUMFILES" -le "0" ]; then
+	NUMFILES=1
+fi
+
+echo "NFILES $NUMFILES"
 pyfasta split -n $NUMFILES $FASTA
 
 rm -rf $DIREND
