@@ -25,7 +25,6 @@ fi
 date1=$(date +"%s")
 >&2 echo "FASTA 2 CSV "
 for dfile in $DIREND/* ; do
-	echo $dfile
 	python ../datasets/fasta2csv.py $dfile $dfile.csv
 done
 date2=$(date +"%s")
