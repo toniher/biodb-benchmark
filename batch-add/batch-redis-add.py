@@ -11,6 +11,9 @@ def main(argv):
 		r=redis.Redis()  
 
 		batch = 1000
+		if len( argv > 1 ):
+			batch = int(argv[1])
+
 		itera = 0
 
 		r.flushdb()

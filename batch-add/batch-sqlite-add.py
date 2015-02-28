@@ -16,6 +16,9 @@ def main(argv):
 		c.execute('''CREATE TABLE SEQS ( id varchar(32) PRIMARY KEY, seq text )''')
 
 		batch = 1000
+		if len( argv > 1 ):
+			batch = int(argv[1])
+			
 		itera = 0
 
 		handle = open( argv[0], "r")

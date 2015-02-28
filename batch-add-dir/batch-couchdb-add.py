@@ -21,6 +21,8 @@ def main(argv):
 			db = couch.create(couchDB)
 
 		batch = 1000
+		if len( argv > 2 ):
+				batch = int(argv[2])
 
 		onlyfiles = [ argv[0]+"/"+f for f in listdir(argv[0]) if isfile(join(argv[0],f)) ]
 		

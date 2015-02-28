@@ -20,6 +20,8 @@ def main(argv):
 		c.execute('''CREATE TABLE SEQS ( id varchar(32) PRIMARY KEY, seq text )''')
 
 		batch = 1000
+		if len( argv > 1 ):
+				batch = int(argv[1])
 		
 		onlyfiles = [ argv[0]+"/"+f for f in listdir(argv[0]) if isfile(join(argv[0],f)) ]
 		
