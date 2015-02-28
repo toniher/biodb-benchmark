@@ -19,7 +19,7 @@ def main(argv):
 			db = couch.create(couchDB)
 
 		batch = 1000
-		if len( argv > 2 ):
+		if len( argv ) > 2:
 				batch = int(argv[2])
 
 		listDocs = []

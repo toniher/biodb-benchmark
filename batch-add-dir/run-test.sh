@@ -4,6 +4,7 @@ PASSWORD=$2
 FASTA=$1
 DIREND=../dir
 TMPDIR=/data/temp
+ALL=0
 
 >&2 echo "SPLIT"
 time ./splitindir.sh $FASTA $DIREND
@@ -13,10 +14,13 @@ time curl -silent -X DELETE http://admin:$PASSWORD@localhost:5984/testseq
 >&2 echo "COUCHDB - ADD"
 time python batch-couchdb-add.py $DIREND $PASSWORD
 
->&2 echo "SQLITE - DROP"
-time rm -rf ../datasets/testseq
->&2 echo "SQLITE - ADD"
-time python batch-sqlite-add.py $DIREND
+if [ $ALL = 1 ]; then
+
+	>&2 echo "SQLITE - DROP"
+	time rm -rf ../datasets/testseq
+	>&2 echo "SQLITE - ADD"
+	time python batch-sqlite-add.py $DIREND
+fi
 
 date1=$(date +"%s")
 >&2 echo "FASTA 2 CSV "
@@ -43,10 +47,13 @@ date2=$(date +"%s")
 diff=$(($date2-$date1))
 >&2 echo "$(($diff / 60)) m $(($diff % 60)) s."
 
->&2 echo "MYSQL - DROP"
-time mysql -utoniher -e 'DROP DATABASE IF EXISTS test; CREATE DATABASE IF NOT EXISTS test;'
->&2 echo "MYSQL - ADD"
-time python batch-mysql-add.py $DIREND $PASSWORD
+if [ $ALL = 1 ]; then
+
+	>&2 echo "MYSQL - DROP"
+	time mysql -utoniher -e 'DROP DATABASE IF EXISTS test; CREATE DATABASE IF NOT EXISTS test;'
+	>&2 echo "MYSQL - ADD"
+	time python batch-mysql-add.py $DIREND $PASSWORD
+fi
 
 >&2 echo "MYSQL - DROP"
 time mysql -utoniher -e 'DROP DATABASE IF EXISTS test; CREATE DATABASE IF NOT EXISTS test;'
