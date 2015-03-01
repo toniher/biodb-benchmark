@@ -3,7 +3,7 @@
 source $1
 PASSWORD=$2
 TMPDIR=/data/temp
-ALL=0
+ALL=$3
 
 >&2 echo "BLAST - DROP"
 time rm -rf $FASTA.p*

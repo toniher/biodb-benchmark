@@ -4,7 +4,9 @@ PASSWORD=$2
 FASTA=$1
 DIREND=../dir
 TMPDIR=/data/temp
-ALL=0
+ALL=$3
+
+rm -rf $TMPDIR/*
 
 >&2 echo "SPLIT"
 time ./splitindir.sh $FASTA $DIREND
