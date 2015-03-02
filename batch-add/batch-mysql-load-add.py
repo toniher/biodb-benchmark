@@ -17,6 +17,8 @@ def main(argv):
 				passwd=myPass) 
 
 		c = conn.cursor()
+		# Avoid problems http://www.percona.com/blog/2008/07/03/how-to-load-large-files-safely-into-innodb-with-load-data-infile/
+		c.execute('''set foreign_key_checks=0; set sql_log_bin=0; set unique_checks=0;''')
 		# Create table
 		c.execute('''CREATE TABLE SEQS ( id varchar(32) PRIMARY KEY, seq text )''')
 
