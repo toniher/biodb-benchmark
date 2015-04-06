@@ -67,6 +67,8 @@ cp batch-sqlite-load-add.sh $TMPDIR/sqlite.sh
 export FASTA
 perl -pi -e 's/\$CSVFILE/$ENV{FASTA}/g' $TMPDIR/sqlite.sh
 time sqlite3 < $TMPDIR/sqlite.sh
+>&2 echo "SQLITE - QUERY"
+time python batch-sqlite-query.py $SEQ
 
 if [ $ALL = 1 ]; then
 	>&2 echo "MYSQL - DROP"
@@ -83,7 +85,8 @@ time mysql -utoniher -e 'DROP DATABASE IF EXISTS test; CREATE DATABASE IF NOT EX
 time cp $FASTA.csv $TMPDIR/mysql-load.csv; chmod a+rx $TMPDIR/mysql-load.csv
 >&2 echo "MYSQL - ADD - LOAD"
 time python batch-mysql-load-add.py $TMPDIR/mysql-load.csv $PASSWORD
-
+>&2 echo "MYSQL - QUERY"
+time python batch-mysql-query.py $SEQ
 
 >&2 echo "REDIS - DROP"
 time redis-cli 'flushdb';
