@@ -66,7 +66,7 @@ time rm -rf ../datasets/testseq
 cp batch-sqlite-load-add.sh $TMPDIR/sqlite.sh
 export FASTA
 perl -pi -e 's/\$CSVFILE/$ENV{FASTA}/g' $TMPDIR/sqlite.sh
-time sqlite3 < $TMPDIR/sqlite.sh
+time sqlite3 ../datasets/testseq < $TMPDIR/sqlite.sh
 >&2 echo "SQLITE - QUERY"
 time python batch-sqlite-query.py $SEQ
 
